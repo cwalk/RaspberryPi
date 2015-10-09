@@ -1,2 +1,2 @@
 # RaspberryPi
-Repo for cool python scripts to use for Raspberry Pi
+Repo for cool python scripts to use for Raspberry Pi.
