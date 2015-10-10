@@ -1,0 +1,77 @@
+
+
+-----------------------------------------------------------------------------------
+
+Raspberry Pi Setup, by Clayton Walker
+
+To access this file from the command line, use "cat ~/PiSetup.txt"
+
+First, make sure you have your Operating System setup on your mini SD card.
+A good place to do that is here: https://www.raspberrypi.org/help/noobs-setup/
+
+Once you have that done, plug in your mini SD card, plug in an Ethernet cord to your router, a mouse, keyboard, HDMI cord connected to a display, and finally the power source to your Pi. It should start booting up on it's own.
+
+Next, when you finally get to the raspi config page (use the "raspi-config" command to access this later) you will want to go through the options.
+
+Make sure you:
+
+-1 Expand the sd card so you have access to full storage
+-2 Change your default password/log in info (default is user: pi, pw: rasberry)
+-4 Set your timezone
+-8 Advanced Options (make sure you enable ssh)
+
+After you have finished, back on the command prompt type "startx" to enter the Graphical User Interface
+
+-----------------------------------------------------------------------------------
+
+Internet Access!
+
+You now want to open up a terminal and type "ifconfig" to get your network details.
+You should see an entry for the Ethernet connection. Take a note of the IP address if you need to ssh into the Pi from another laptop while it's connected to Ethernet later. 
+
+For now, you should run these two commands while you are connected to the internet (to make sure you have a working internet connection, see if you can access Google from the default web browser).
+
+"sudo apt-get update" #Launch a repository update
+"sudo apt-get upgrade" #Run a system upgrade
+
+The following two commands aren't necessary, but I did them anyways.
+
+"sudo apt-get install raspberrypi-bootloader" #Make sure that the latest Raspberry Pi firmware version is installed
+"apt-get install wpasupplicant" #Install the wpa_supplicant utility
+
+Once all those updates are done, type the command "sudo nano /etc/network/interfaces"
+
+This will open up a text editor in the terminal. Make sure yours now looks like this: (replace "ssid" and "password" with your actual WiFi login info)
+
+
+auto lo
+ 
+iface lo inet loopback
+iface eth0 inet dhcp
+ 
+allow-hotplug wlan0
+auto wlan0
+iface wlan0 inet dhcp
+        wpa-ssid "ssid"
+        wpa-psk "password"
+
+iface default inet dhcp
+
+
+After you are done, hit control+X to exit, and then Y for yes to save, and hit enter to save the location as /etc/network/interfaces. 
+
+Now unplug the Ethernet and plug in your WiFi dongle. Once that is done, you can reboot your Raspberry Pi by typing the "sudo reboot" comnand.
+
+When it boots up, look for the "Network Interfaces" line. If it looks good and recognizes your wlan0 (WiFi) then you're all set. You can test it by going to the web browser.
+
+-----------------------------------------------------------------------------------
+
+Now take a look at "ifconfig" in the terminal, and take a note of the IP under wlan0. This is the WiFi IP that you will use to ssh into your Pi from your laptop from now on. You can do this from the terminal through "ssh pi@IP" or use the PuTTY application if you are on Windows.
+
+If you want to logout use the "logout" command to return the terminal to your laptop. To shutdown the Raspberry Pi from the terminal, use the "sudo halt" command.
+
+-----------------------------------------------------------------------------------
+
+For Remote Desktop and File sharing over SFTP check out: http://www.howtogeek.com/141157/how-to-configure-your-raspberry-pi-for-remote-shell-desktop-and-file-transfer/all/
+
+
