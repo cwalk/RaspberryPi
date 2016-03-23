@@ -17,3 +17,7 @@ JavaScript files are run with nodejs: `node file.js`
 ## YouTube
 
 YouTube: https://www.youtube.com/watch?v=4FTMBIvJswc
+
+## Circuit Diagram
+
+![Circuit Diagram](/Circuit.png?raw=true "Circuit Diagram")
